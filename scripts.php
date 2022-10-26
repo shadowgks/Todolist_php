@@ -3,10 +3,10 @@
     include_once('database.php');
     //SESSSION IS A WAY TO STORE DATA TO BE USED ACROSS MULTIPLE PAGES
     session_start();
-
+    
     //ROUTING
     if(isset($_POST['save'])){
-        saveTask();
+        saveTask($conn);
     }        
     if(isset($_POST['update']))      updateTask();
     if(isset($_POST['delete']))      deleteTask();
@@ -19,16 +19,17 @@
         echo "Fetch all tasks";
     }
     
-    function saveTask()
+    function saveTask($conn)
     {
         //Get data from form
         $title = $_POST['title'];
-        $type = $_POST['type'];
-        $priority = $_POST['priority'];
-        $status = $_POST['status'];
         $date = $_POST['date'];
         $description = $_POST['description'];
-
+        
+        //cmd sql
+        $add_data = $conn->prepare("INSERT INTO tasks(titile, type_id, priority_id, status_id, task_datetime, description) 
+                        VALUES('',1,1,1,'','')");
+        $add_data->execute();
         
 
         //SQL INSERT
