@@ -1,11 +1,13 @@
 <?php
     //INCLUDE DATABASE FILE
-    include('database.php');
+    include_once('database.php');
     //SESSSION IS A WAY TO STORE DATA TO BE USED ACROSS MULTIPLE PAGES
     session_start();
 
     //ROUTING
-    if(isset($_POST['save']))        saveTask();
+    if(isset($_POST['save'])){
+        saveTask();
+    }        
     if(isset($_POST['update']))      updateTask();
     if(isset($_POST['delete']))      deleteTask();
     
@@ -16,11 +18,19 @@
         //SQL SELECT
         echo "Fetch all tasks";
     }
-
-
+    
     function saveTask()
     {
-        //CODE HERE
+        //Get data from form
+        $title = $_POST['title'];
+        $type = $_POST['type'];
+        $priority = $_POST['priority'];
+        $status = $_POST['status'];
+        $date = $_POST['date'];
+        $description = $_POST['description'];
+
+        
+
         //SQL INSERT
         $_SESSION['message'] = "Task has been added successfully !";
 		header('location: index.php');
