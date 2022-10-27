@@ -254,7 +254,7 @@
 			<div class="row">
 					
 				<div class="col-xl-4 col-lg-6">
-					<div class="panel panel-inverse">
+					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
 							<h4 class="panel-title">To do (<span id="to-do-tasks-count">0</span>)</h4>
 							<div class="panel-heading-btn">
@@ -266,6 +266,7 @@
 						</div>
 						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="to-do-tasks">
 							<!-- TO DO TASKS HERE -->
+
 							<?php
 								//PHP CODE HERE
 								//DATA FROM getTasks() FUNCTION
@@ -274,7 +275,7 @@
 					</div>
 				</div>
 				<div class="col-xl-4 col-lg-6">
-					<div class="panel panel-inverse">
+					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
 							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count">0</span>)</h4>
 							<div class="panel-heading-btn">
@@ -288,13 +289,14 @@
 							<!-- IN PROGRESS TASKS HERE -->
 							<?php
 								//PHP CODE HERE
+								getTasks();
 								//DATA FROM getTasks() FUNCTION
 							?>
 						</div>
 					</div>
 				</div>
-				<div class="col-xl-4 col-lg-6">
-					<div class="panel panel-inverse">
+				<div class="col-xl-4 col-lg-6 bg-transparent">
+					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
 							<h4 class="panel-title">Done (<span id="done-tasks-count">0</span>)</h4>
 							<div class="panel-heading-btn">
@@ -306,6 +308,7 @@
 						</div>
 						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="done-tasks">
 							<!-- DONE TASKS HERE -->
+						
 							<?php
 								//PHP CODE HERE
 								//DATA FROM getTasks() FUNCTION
@@ -344,11 +347,11 @@
 								<label class="form-label">Type</label>
 								<div class="ms-3">
 									<div class="form-check mb-1">
-										<input class="form-check-input" name="task-type" type="radio" value="Feature" id="task-type-feature"/>
+										<input class="form-check-input" name="task-type" type="radio" value="1" id="task-type-feature"/>
 										<label class="form-check-label" for="task-type-feature">Feature</label>
 									</div>
 									<div class="form-check">
-										<input class="form-check-input" name="task-type" type="radio" value="Bug" id="task-type-bug"/>
+										<input class="form-check-input" name="task-type" type="radio" value="2" id="task-type-bug"/>
 										<label class="form-check-label" for="task-type-bug">Bug</label>
 									</div>
 								</div>
@@ -357,20 +360,20 @@
 							<div class="mb-3">
 								<label class="form-label">Priority</label>
 								<select name="priority" class="form-select" id="task-priority">
-									<option value="">Please select</option>
-									<option value="Low">Low</option>
-									<option value="Medium">Medium</option>
-									<option value="High">High</option>
-									<option value="Critical">Critical</option>
+									<option value="Please select">Please select</option>
+									<option value="1">Low</option>
+									<option value="2">Medium</option>
+									<option value="3">High</option>
+									<option value="4">Critical</option>
 								</select>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Status</label>
 								<select name="status" class="form-select" id="task-status">
-									<option value="">Please select</option>
-									<option value="To Do">To Do</option>
-									<option value="In Progress">In Progress</option>
-									<option value="Done">Done</option>
+									<option value="Please select">Please select</option>
+									<option value="1">To Do</option>
+									<option value="2">In Progress</option>
+									<option value="3">Done</option>
 								</select>
 							</div>
 							<div class="mb-3">
