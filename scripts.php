@@ -6,46 +6,83 @@
     
     //ROUTING
     if(isset($_POST['save'])){
-        saveTask($conn);
+        saveTask();
     }        
-    if(isset($_POST['update']))      updateTask();
-    if(isset($_POST['delete']))      deleteTask();
+    if(isset($_POST['update'])){
+        updateTask();
+    }      
+    if(isset($_POST['delete'])){
+        deleteTask();
+    }      
 
-    function getTasks()
+    function numberofrow($count){
+        global $conn;
+        $requete = "SELECT tasks.*
+        ,priorities.name AS 'NamePriorities'
+        ,types.name AS 'NameTypes'
+        ,statuses.name AS 'NameStatuses' 
+        FROM tasks join types join priorities join statuses
+        on types.id=tasks.type_id
+        and priorities.id=tasks.priority_id
+        and statuses.id=tasks.status_id
+        where tasks.status_id = $count";
+        $data = mysqli_query($conn,$requete);
+        echo mysqli_num_rows($data);
+    }
+
+    function getTasks($status)
     {
-        include('database.php');
-        //CODE HERE
+        global $conn;
+
         //SQL SELECT
-        $requete = "SELECT * FROM tasks";
+        $requete = "SELECT tasks.*
+        ,priorities.name AS 'NamePriorities'
+        ,types.name AS 'NameTypes'
+        ,statuses.name AS 'NameStatuses' 
+        FROM tasks join types join priorities join statuses
+        on types.id=tasks.type_id
+        and priorities.id=tasks.priority_id
+        and statuses.id=tasks.status_id
+        where tasks.status_id = $status";
         $data = mysqli_query($conn,$requete);
 
+        //check icons status
+        if($status == 1) {
+            $icons = 'fa-circle-question';
+        }
+        else if ($status == 2) {
+            $icons = 'fa-rotate-right';
+        }
+        else if ($status == 3) {
+            $icons = 'fa-circle-check';
+        }
+
         while($row = $data->fetch_assoc()) {
-        echo '<button  class="bg-light d-flex align-items-center border-0 w-100 mb-2 py-3 px-0 bg-white mb-1" href="#modal-task" data-bs-toggle="modal">
+        echo '<button class="bg-light d-flex align-items-center border-0 w-100 mb-2 py-3 px-0 bg-white mb-1 show-modal-task" href="#modal-task" data-bs-toggle="modal">
             <div class="fs-4 text-success">
-                <i class="fa-solid fa-circle-question px-3"></i>
+                <i class="fa-solid '.$icons.' px-3"></i>
             </div>
             <div class="text-start">
-                <div class="fw-bolder fs-5">'.$row['titile'].'</div>
+                <div style="display:none" class="id">'.$row['id'].'</div>
+                <div style="display:none" class="status">'.$row['NameStatuses'].'</div>
+                <div class="fw-bolder fs-5 title">'.$row['title'].'</div>
                 <div class="pb-1">
-                    <div class="opacity-50">#'.$row['id'].' created in '.$row['task_datetime'].'</div>
-                    <div class="fw-bold" title="'.$row['description'].'">'.$row['description'].'</div>
+                    <div class="opacity-50">#'.$row['id'].' created in <span class="dateTime">'.$row['task_datetime'].'</span></div>
+                    <div class="fw-bold description" title="'.$row['description'].'">'.$row['description'].'</div>
                 </div>
-                <div class="">
-                    <span class="badge bg-primary">High</span>
-                    <span class="badge bg-secondary">Feature</span>
+                <div>
+                    <span class="badge bg-primary prioritie">'.$row['NamePriorities'].'</span>
+                    <span class="badge bg-secondary type">'.$row['NameTypes'].'</span>
                 </div>
             </div>
         </button>';
         }
-        //test
-        var_dump($row);
-        //count
-        // $count = mysqli_num_rows($data);
-        // echo $count;
     }
     
-    function saveTask($conn)
+    function saveTask()
     {
+        global $conn;
+    
         //Get data from form
         $title = $_POST['title'];
         $type = $_POST['task-type'];
@@ -55,30 +92,63 @@
         $description = $_POST['description'];
         
         //cmd sql
-        // $add_data = mysqli_query("INSERT INTO tasks(titile, type_id, priority_id, status_id, task_datetime, description) 
-        // VALUES('',1,1,1,'','')");
-        // $add_data->execute();
-        
-
-        //SQL INSERT
-        $_SESSION['message'] = "Task has been added successfully !";
-		header('location: index.php');
+        $add_data = "INSERT INTO tasks(title, type_id, priority_id, status_id, task_datetime, description)
+        VALUES('$title','$type','$priority','$status','$date','$description')";
+        if(mysqli_query($conn,$add_data)){
+            $_SESSION['Seccess'] = "Task has been added successfully !";
+            header('location: index.php');
+        }else{
+            $_SESSION['Faild'] = "Something Went Wrong.!!!";
+            header('location: index.php');
+        }
+            
     }
 
     function updateTask()
     {
-        //CODE HERE
+        global $conn;
+
+        //Get data form
+        $id = $_POST["task-id"];
+        $title = $_POST['title'];
+        $type = $_POST['task-type'];
+        $priority = $_POST['priority'];
+        $status = $_POST['status'];
+        $date = $_POST['date'];
+        $description = $_POST['description'];
+
         //SQL UPDATE
-        $_SESSION['message'] = "Task has been updated successfully !";
-		header('location: index.php');
+        $update_data = "UPDATE `tasks` 
+        SET title='$title',type_id='$type',priority_id='$priority',status_id='$status',task_datetime='$date',description='$description' 
+        WHERE id = '$id'";
+        if(mysqli_query($conn,$update_data)){
+            $_SESSION['Seccess'] = "Task has been updated successfully !";
+            header('location: index.php');
+        }else{
+            $_SESSION['Faild'] = "Something Went Wrong.!!!";
+            header('location: index.php');
+        }
     }
+
 
     function deleteTask()
     {
-        //CODE HERE
-        //SQL DELETE
-        $_SESSION['message'] = "Task has been deleted successfully !";
-		header('location: index.php');
+        global $conn;
+
+        //Get id form
+        $id = $_POST["task-id"];
+
+        //SQL INSERT
+        $delete_data = "DELETE FROM `tasks`
+        WHERE id='$id'";
+
+        if(mysqli_query($conn,$delete_data)){
+            $_SESSION['Seccess'] = "Task has been deleted successfully !";
+            header('location: index.php');
+        }else{
+            $_SESSION['Faild'] = "Something Went Wrong.!!!";
+            header('location: index.php');
+        }
     }
 
 ?>

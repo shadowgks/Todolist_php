@@ -10,7 +10,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	
+
 	<!-- ================== BEGIN core-css ================== -->
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
 	<link href="assets/css/vendor.min.css" rel="stylesheet" />
@@ -222,7 +222,7 @@
 				</div>
 				
 				<div class="ms-auto">
-				<a href="#modal-task" data-bs-toggle="modal" class="btn btn-success btn-rounded px-4 rounded-pill"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add Task</a>
+				<a href="#modal-task" data-bs-toggle="modal" class="btn btn-success btn-rounded px-4 rounded-pill add-modal-task"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add Task</a>
 				</div>
 			</div>
 			
@@ -240,13 +240,25 @@
 				<div class="ms-md-4 mt-md-0 mt-2"><i class="fa fa-users-cog fa-fw me-1 text-dark text-opacity-50"></i> 52 participant</div>
 				<div class="ms-md-4 mt-md-0 mt-2"><i class="far fa-clock fa-fw me-1 text-dark text-opacity-50"></i> 14 day(s)</div>
 			</div>
-
-			<?php if (isset($_SESSION['message'])): ?>
+			<!-- Seccess -->
+			<?php if (isset($_SESSION['Seccess'])): ?>
 				<div class="alert alert-green alert-dismissible fade show">
 				<strong>Success!</strong>
 					<?php 
-						echo $_SESSION['message']; 
-						unset($_SESSION['message']);
+						echo $_SESSION['Seccess']; 
+						unset($_SESSION['Seccess']);
+					?>
+					<button type="button" class="btn-close" data-bs-dismiss="alert"></span>
+				</div>
+			<?php endif ?>
+
+			<!-- Faild -->
+			<?php if (isset($_SESSION['Faild'])): ?>
+				<div class="alert alert-danger alert-dismissible fade show">
+				<strong>Faild!</strong>
+					<?php 
+						echo $_SESSION['Faild']; 
+						unset($_SESSION['Faild']);
 					?>
 					<button type="button" class="btn-close" data-bs-dismiss="alert"></span>
 				</div>
@@ -256,7 +268,7 @@
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">To do (<span id="to-do-tasks-count">0</span>)</h4>
+							<h4 class="panel-title">To do (<span id="to-do-tasks-count"><?php numberofrow(1) ?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -269,6 +281,7 @@
 
 							<?php
 								//PHP CODE HERE
+								getTasks(1);
 								//DATA FROM getTasks() FUNCTION
 							?>
 						</div>
@@ -277,7 +290,7 @@
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count">0</span>)</h4>
+							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count"><?php numberofrow(2) ?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -289,7 +302,7 @@
 							<!-- IN PROGRESS TASKS HERE -->
 							<?php
 								//PHP CODE HERE
-								getTasks();
+								getTasks(2);
 								//DATA FROM getTasks() FUNCTION
 							?>
 						</div>
@@ -298,7 +311,7 @@
 				<div class="col-xl-4 col-lg-6 bg-transparent">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">Done (<span id="done-tasks-count">0</span>)</h4>
+							<h4 class="panel-title">Done (<span id="done-tasks-count"><?php numberofrow(3) ?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -311,8 +324,10 @@
 						
 							<?php
 								//PHP CODE HERE
+								getTasks(3);
 								//DATA FROM getTasks() FUNCTION
 							?>
+							
 						</div>
 					</div>
 				</div>
@@ -331,14 +346,14 @@
 	<div class="modal fade" id="modal-task">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="scripts.php" method="POST" id="form-task">
+				<form action="scripts.php" method="POST" id="form-task" name="formTask">
 					<div class="modal-header">
 						<h5 class="modal-title">Add Task</h5>
 						<a href="#" class="btn-close" data-bs-dismiss="modal"></a>
 					</div>
 					<div class="modal-body">
 							<!-- This Input Allows Storing Task Index  -->
-							<input type="hidden" id="task-id">
+							<input type="hidden" name="task-id" id="task-id">
 							<div class="mb-3">
 								<label class="form-label">Title</label>
 								<input type="text" name="title" class="form-control" id="task-title"/>
@@ -387,15 +402,17 @@
 						
 					</div>
 					<div class="modal-footer">
-						<a href="#" class="btn btn-white" data-bs-dismiss="modal">Cancel</a>
-						<button type="submit" name="delete" class="btn btn-danger task-action-btn" id="task-delete-btn">Delete</a>
-						<button type="submit" name="update" class="btn btn-warning task-action-btn" id="task-update-btn">Update</a>
-						<button type="submit" name="save" class="btn btn-primary task-action-btn" id="task-save-btn">Save</button>
+						<button class="btn btn-white" data-bs-dismiss="modal">Cancel</a>
+						<button type="submit" name="delete" class="btn btn-danger task-action-btn" id="task_delete_btn">Delete</a>
+						<button type="submit" name="update" class="btn btn-warning task-action-btn" id="task_update_btn">Update</a>
+						<button type="submit" name="save" class="btn btn-primary task-action-btn" id="task_save_btn">Save</button>
 					</div>
 				</form>
 			</div>
 		</div>
+		
 	</div>
+	
 	
 	<!-- ================== BEGIN core-js ================== -->
 	<script src="assets/js/vendor.min.js"></script>
@@ -403,8 +420,6 @@
 	<!-- ================== END core-js ================== -->
 	<script src="scripts.js"></script>
 
-	<script>
-		//reloadTasks();
-	</script>
+	<script></script>
 </body>
 </html>
