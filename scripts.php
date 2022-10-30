@@ -1,6 +1,6 @@
 <?php
     //INCLUDE DATABASE FILE
-    include('database.php');
+    include_once('database.php');
     //SESSSION IS A WAY TO STORE DATA TO BE USED ACROSS MULTIPLE PAGES
     session_start();
     
@@ -15,24 +15,7 @@
         deleteTask();
     }      
 
-    function numberofrow($count){
-        global $conn;
-
-        $requete = "SELECT tasks.*
-        ,priorities.name AS 'NamePriorities'
-        ,types.name AS 'NameTypes'
-        ,statuses.name AS 'NameStatuses' 
-        FROM tasks join types join priorities join statuses
-        on types.id=tasks.type_id
-        and priorities.id=tasks.priority_id
-        and statuses.id=tasks.status_id
-        where tasks.status_id = $count";
-        $data = mysqli_query($conn,$requete);
-        echo mysqli_num_rows($data);
-    }
-
-    function getTasks($status)
-    {
+    function querySelect($S_C){
         global $conn;
 
         //SQL SELECT
@@ -44,17 +27,25 @@
         on types.id=tasks.type_id
         and priorities.id=tasks.priority_id
         and statuses.id=tasks.status_id
-        where tasks.status_id = $status";
-        $data = mysqli_query($conn,$requete);
+        where tasks.status_id = $S_C";
 
-        //check icons status
-        if($status == 1) {
+        //Execute sql query and return query
+        return mysqli_query($conn,$requete);
+    }
+
+    function getTasks($status)
+    {
+        //Dec function querySelect
+        $data = querySelect($status);
+
+        //Check icons status
+        if($status == 1){
             $icons = 'fa-circle-question';
         }
-        else if ($status == 2) {
+        else if ($status == 2){
             $icons = 'fa-rotate-right';
         }
-        else if ($status == 3) {
+        else if ($status == 3){
             $icons = 'fa-circle-check';
         }
 
@@ -89,15 +80,20 @@
         </button>';
         }
     }
+
+    function numberofrow($count){
+        //Dec function querySelect
+        echo mysqli_num_rows(querySelect($count));
+    }
     
     function saveTask()
     {
         global $conn;
     
         //Get data from form
-        $title = $_POST['title'];
-        $type = $_POST['task_title'];
-        $priority = $_POST['task_type'];
+        $title = $_POST['task_title'];
+        $type = $_POST['task_type'];
+        $priority = $_POST['task_priority'];
         $status = $_POST['task_status'];
         $date = $_POST['task_datetime'];
         $description = $_POST['task_description'];
@@ -105,6 +101,8 @@
         //cmd sql
         $add_data = "INSERT INTO tasks(title, type_id, priority_id, status_id, task_datetime, description)
         VALUES('$title','$type','$priority','$status','$date','$description')";
+
+        //Execute sql query
         if(mysqli_query($conn,$add_data)){
             $_SESSION['Seccess'] = "Task has been added successfully !";
             header('location: index.php');
@@ -132,6 +130,8 @@
         $update_data = "UPDATE `tasks` 
         SET title='$title',type_id='$type',priority_id='$priority',status_id='$status',task_datetime='$date',description='$description' 
         WHERE id = '$id'";
+
+        //Execute sql query
         if(mysqli_query($conn,$update_data)){
             $_SESSION['Seccess'] = "Task has been updated successfully !";
             header('location: index.php');
@@ -153,6 +153,7 @@
         $delete_data = "DELETE FROM `tasks`
         WHERE id='$id'";
 
+        //Execute sql query
         if(mysqli_query($conn,$delete_data)){
             $_SESSION['Seccess'] = "Task has been deleted successfully !";
             header('location: index.php');

@@ -1,5 +1,5 @@
 <?php
-    include('scripts.php');
+    include_once('scripts.php');
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,4 @@
 <?php
-    
     //CONNECT TO MYSQL DATABASE USING MYSQLI
     $servername = "localhost";
     $username = "root";
