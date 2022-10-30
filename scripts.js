@@ -2,7 +2,7 @@ function showModalTask(id){
     //Dec Form
     const form = document.forms['formTask'];
     
-    //Field form Task
+    //fill in form Task
     form.task_id.value = id;
     form.task_title.value = document.getElementById(id).getAttribute('title');
     form.task_type.value = document.getElementById(id).getAttribute('type');
