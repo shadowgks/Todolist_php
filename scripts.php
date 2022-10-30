@@ -17,6 +17,7 @@
 
     function numberofrow($count){
         global $conn;
+
         $requete = "SELECT tasks.*
         ,priorities.name AS 'NamePriorities'
         ,types.name AS 'NameTypes'
@@ -58,7 +59,17 @@
         }
 
         while($row = $data->fetch_assoc()) {
-        echo '<button class="bg-light d-flex align-items-center border-0 w-100 mb-2 py-3 px-0 bg-white mb-1 show-modal-task" href="#modal-task" data-bs-toggle="modal">
+        echo '<button 
+        class="bg-light d-flex align-items-center border-0 w-100 mb-2 py-3 px-0 bg-white mb-1" 
+        href="#modal-task" data-bs-toggle="modal"
+        onclick="showModalTask('.$row['id'].')"
+        id="'.$row['id'].'"
+        title="'.$row['title'].'"
+        type="'.$row['type_id'].'"
+        priorite="'.$row['priority_id'].'"
+        statue="'.$row['status_id'].'"
+        datetime="'.$row['task_datetime'].'"
+        description="'.$row['description'].'">
             <div class="fs-4 text-success">
                 <i class="fa-solid '.$icons.' px-3"></i>
             </div>
@@ -85,11 +96,11 @@
     
         //Get data from form
         $title = $_POST['title'];
-        $type = $_POST['task-type'];
-        $priority = $_POST['priority'];
-        $status = $_POST['status'];
-        $date = $_POST['date'];
-        $description = $_POST['description'];
+        $type = $_POST['task_title'];
+        $priority = $_POST['task_type'];
+        $status = $_POST['task_status'];
+        $date = $_POST['task_datetime'];
+        $description = $_POST['task_description'];
         
         //cmd sql
         $add_data = "INSERT INTO tasks(title, type_id, priority_id, status_id, task_datetime, description)
@@ -109,13 +120,13 @@
         global $conn;
 
         //Get data form
-        $id = $_POST["task-id"];
-        $title = $_POST['title'];
-        $type = $_POST['task-type'];
-        $priority = $_POST['priority'];
-        $status = $_POST['status'];
-        $date = $_POST['date'];
-        $description = $_POST['description'];
+        $id = $_POST["task_id"];
+        $title = $_POST['task_title'];
+        $type = $_POST['task_type'];
+        $priority = $_POST['task_priority'];
+        $status = $_POST['task_status'];
+        $date = $_POST['task_datetime'];
+        $description = $_POST['task_description'];
 
         //SQL UPDATE
         $update_data = "UPDATE `tasks` 
@@ -136,7 +147,7 @@
         global $conn;
 
         //Get id form
-        $id = $_POST["task-id"];
+        $id = $_POST["task_id"];
 
         //SQL INSERT
         $delete_data = "DELETE FROM `tasks`
