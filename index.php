@@ -1,5 +1,6 @@
 <?php
     include_once('scripts.php');
+	include_once('database.php');
 ?>
 
 <!DOCTYPE html>
@@ -361,34 +362,50 @@
 							<div class="mb-3">
 								<label class="form-label">Type</label>
 								<div class="ms-3">
-									<div class="form-check mb-1">
-										<input class="form-check-input" name="task_type" type="radio" value="1" id="task-type-feature"/>
-										<label class="form-check-label" for="task-type-feature">Feature</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" name="task_type" type="radio" value="2" id="task-type-bug"/>
-										<label class="form-check-label" for="task-type-bug">Bug</label>
-									</div>
+									<?php
+									$requete = "SELECT * FROM types";
+									$data = mysqli_query($conn,$requete);
+									while ($row = $data->fetch_assoc()){
+										echo '
+										<div class="form-check mb-1">
+											<input class="form-check-input" name="task_type" type="radio" value="'.$row['id'].'" id="task-type-'.$row['name'].'"/>
+											<label class="form-check-label" for="task-type-'.$row['name'].'">'.$row['name'].'</label>
+										</div>
+										';
+									};
+									?>
 								</div>
-								
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Priority</label>
 								<select name="task_priority" class="form-select" id="task-priority">
 									<option value="Please select">Please select</option>
-									<option value="1">Low</option>
-									<option value="2">Medium</option>
-									<option value="3">High</option>
-									<option value="4">Critical</option>
+									<!-- Select table priorities -->
+									<?php
+									$requete = "SELECT * FROM priorities";
+									$data = mysqli_query($conn,$requete);
+									while ($row = $data->fetch_assoc()){
+										echo '
+										<option value="'.$row['id'].'">'.$row['name'].'</option>
+										';
+									};
+									?>
 								</select>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Status</label>
 								<select name="task_status" class="form-select" id="task-status">
 									<option value="Please select">Please select</option>
-									<option value="1">To Do</option>
-									<option value="2">In Progress</option>
-									<option value="3">Done</option>
+									<!-- Select table priorities -->
+									<?php
+									$requete = "SELECT * FROM statuses";
+									$data = mysqli_query($conn,$requete);
+									while ($row = $data->fetch_assoc()){
+										echo '
+										<option value="'.$row['id'].'">'.$row['name'].'</option>
+										';
+									};
+									?>
 								</select>
 							</div>
 							<div class="mb-3">

@@ -41,11 +41,9 @@
         //Check icons status
         if($status == 1){
             $icons = 'fa-circle-question';
-        }
-        else if ($status == 2){
+        }else if ($status == 2){
             $icons = 'fa-rotate-right';
-        }
-        else if ($status == 3){
+        }else if ($status == 3){
             $icons = 'fa-circle-check';
         }
 
@@ -116,7 +114,7 @@
     function updateTask()
     {
         global $conn;
-
+        
         //Get data form
         $id = $_POST["task_id"];
         $title = $_POST['task_title'];
@@ -161,5 +159,4 @@
             header('location: index.php');
         }
     }
-
 ?>
