@@ -81,7 +81,7 @@
         }
     }
 
-    function numberofrow($count){
+    function countRowsTasks($count){
         //Dec function querySelect
         echo mysqli_num_rows(querySelect($count));
     }
@@ -140,7 +140,6 @@
             header('location: index.php');
         }
     }
-
 
     function deleteTask()
     {

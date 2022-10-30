@@ -222,7 +222,7 @@
 				</div>
 				
 				<div class="ms-auto">
-				<a href="#modal-task" data-bs-toggle="modal" class="btn btn-success btn-rounded px-4 rounded-pill add-modal-task"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add Task</a>
+				<a href="#modal-task" data-bs-toggle="modal" class="btn btn-success btn-rounded px-4 rounded-pill" onclick="btnAddTasks()"><i class="fa fa-plus fa-lg me-2 ms-n2 text-success-900"></i> Add Task</a>
 				</div>
 			</div>
 			
@@ -241,7 +241,7 @@
 				<div class="ms-md-4 mt-md-0 mt-2"><i class="far fa-clock fa-fw me-1 text-dark text-opacity-50"></i> 14 day(s)</div>
 			</div>
 			<!-- Seccess -->
-			<?php if (isset($_SESSION['Seccess'])): ?>
+			<?php if(isset($_SESSION['Seccess'])): ?>
 				<div class="alert alert-green alert-dismissible fade show">
 				<strong>Success!</strong>
 					<?php 
@@ -253,7 +253,7 @@
 			<?php endif ?>
 
 			<!-- Faild -->
-			<?php if (isset($_SESSION['Faild'])): ?>
+			<?php if(isset($_SESSION['Faild'])): ?>
 				<div class="alert alert-danger alert-dismissible fade show">
 				<strong>Faild!</strong>
 					<?php 
@@ -268,7 +268,7 @@
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">To do (<span id="to-do-tasks-count"><?php numberofrow(1) ?></span>)</h4>
+							<h4 class="panel-title">To do (<span id="to-do-tasks-count"><?php countRowsTasks(1) ?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -290,7 +290,7 @@
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count"><?php numberofrow(2) ?></span>)</h4>
+							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count"><?php countRowsTasks(2) ?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -311,7 +311,7 @@
 				<div class="col-xl-4 col-lg-6 bg-transparent">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">Done (<span id="done-tasks-count"><?php numberofrow(3) ?></span>)</h4>
+							<h4 class="panel-title">Done (<span id="done-tasks-count"><?php countRowsTasks(3) ?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
