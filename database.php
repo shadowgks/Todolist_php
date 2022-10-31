@@ -14,6 +14,7 @@
         exit();
     }else{
         echo "Connected successfully";
+        
     }
     
 ?>

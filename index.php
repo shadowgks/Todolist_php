@@ -269,7 +269,7 @@
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">To do (<span id="to-do-tasks-count"><?php countRowsTasks(1) ?></span>)</h4>
+							<h4 class="panel-title">To do (<span id="to-do-tasks-count"><?php countRowsTasks(1)?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -279,7 +279,6 @@
 						</div>
 						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="to-do-tasks">
 							<!-- TO DO TASKS HERE -->
-
 							<?php
 								//PHP CODE HERE
 								getTasks(1);
@@ -291,7 +290,7 @@
 				<div class="col-xl-4 col-lg-6">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count"><?php countRowsTasks(2) ?></span>)</h4>
+							<h4 class="panel-title">In Progress (<span id="in-progress-tasks-count"><?php countRowsTasks(2)?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -312,7 +311,7 @@
 				<div class="col-xl-4 col-lg-6 bg-transparent">
 					<div class="panel panel-inverse bg-transparent">
 						<div class="panel-heading">
-							<h4 class="panel-title">Done (<span id="done-tasks-count"><?php countRowsTasks(3) ?></span>)</h4>
+							<h4 class="panel-title">Done (<span id="done-tasks-count"><?php countRowsTasks(3)?></span>)</h4>
 							<div class="panel-heading-btn">
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-default" data-toggle="panel-expand"><i class="fa fa-expand"></i></a>
 								<a href="javascript:;" class="btn btn-xs btn-icon btn-success" data-toggle="panel-reload"><i class="fa fa-redo"></i></a>
@@ -322,13 +321,11 @@
 						</div>
 						<div class="list-group list-group-flush rounded-bottom overflow-hidden panel-body p-0" id="done-tasks">
 							<!-- DONE TASKS HERE -->
-						
 							<?php
 								//PHP CODE HERE
 								getTasks(3);
 								//DATA FROM getTasks() FUNCTION
-							?>
-							
+							?>							
 						</div>
 					</div>
 				</div>
@@ -365,7 +362,7 @@
 									<?php
 									$requete = "SELECT * FROM types";
 									$data = mysqli_query($conn,$requete);
-									while ($row = $data->fetch_assoc()){
+									while ($row = mysqli_fetch_assoc($data)){
 										echo '
 										<div class="form-check mb-1">
 											<input class="form-check-input" name="task_type" type="radio" value="'.$row['id'].'" id="task-type-'.$row['name'].'"/>
@@ -384,7 +381,7 @@
 									<?php
 									$requete = "SELECT * FROM priorities";
 									$data = mysqli_query($conn,$requete);
-									while ($row = $data->fetch_assoc()){
+									while ($row = mysqli_fetch_assoc($data)){
 										echo '
 										<option value="'.$row['id'].'">'.$row['name'].'</option>
 										';
@@ -400,7 +397,7 @@
 									<?php
 									$requete = "SELECT * FROM statuses";
 									$data = mysqli_query($conn,$requete);
-									while ($row = $data->fetch_assoc()){
+									while ($row = mysqli_fetch_assoc($data)){
 										echo '
 										<option value="'.$row['id'].'">'.$row['name'].'</option>
 										';
