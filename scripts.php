@@ -46,9 +46,7 @@
         }else if ($status == 3){
             $icons = 'fa-circle-check';
         }  
-
-        while($row = mysqli_fetch_assoc($data)) {
-        
+        while($row = mysqli_fetch_assoc($data)){
         echo '<button 
         class="bg-light d-flex align-items-center border-0 w-100 mb-2 py-3 px-0 bg-white mb-1" 
         href="#modal-task" data-bs-toggle="modal"
@@ -77,7 +75,6 @@
             </div>
         </button>';
         }
-
     }
 
     function countRowsTasks($count){
@@ -106,15 +103,13 @@
             $_SESSION['Seccess'] = "Task has been added successfully !";
             header('location: index.php');
         }else{
-            $_SESSION['Faild'] = "Something Went Wrong.!!!";
+            $_SESSION['Faild'] = "Something went wrong of Add Task!";
             header('location: index.php');
-        }
-            
+        }    
     }
 
     function updateTask()
     {
-
         global $conn;
         
         //Get data form
@@ -136,7 +131,7 @@
             $_SESSION['Seccess'] = "Task has been updated successfully !";
             header('location: index.php');
         }else{
-            $_SESSION['Faild'] = "Something Went Wrong.!!!";
+            $_SESSION['Faild'] = "Something went wrong of update Task!";
             header('location: index.php');
         }
     }
@@ -157,7 +152,7 @@
             $_SESSION['Seccess'] = "Task has been deleted successfully !";
             header('location: index.php');
         }else{
-            $_SESSION['Faild'] = "Something Went Wrong.!!!";
+            $_SESSION['Faild'] = "Something went wrong of deleted Task!";
             header('location: index.php');
         }
     }
