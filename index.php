@@ -432,6 +432,9 @@
 	<script src="assets/js/vendor.min.js"></script>
 	<script src="assets/js/app.min.js"></script>
 	<!-- ================== END core-js ================== -->
+
+	<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
+	
 	<script src="scripts.js"></script>
 
 	<script></script>
