@@ -17,7 +17,7 @@
 	<link href="assets/css/vendor.min.css" rel="stylesheet" />
 	<link href="assets/css/default/app.min.css" rel="stylesheet" />
 	<!-- ================== END core-css ================== -->
-	<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 
@@ -242,6 +242,7 @@
 				<div class="ms-md-4 mt-md-0 mt-2"><i class="fa fa-users-cog fa-fw me-1 text-dark text-opacity-50"></i> 52 participant</div>
 				<div class="ms-md-4 mt-md-0 mt-2"><i class="far fa-clock fa-fw me-1 text-dark text-opacity-50"></i> 14 day(s)</div>
 			</div>
+
 			<!-- Seccess -->
 			<?php if(isset($_SESSION['Seccess'])): ?>
 				<div class="alert alert-green alert-dismissible fade show">
@@ -431,11 +432,12 @@
 						<button type="submit" name="save" class="btn btn-primary task-action-btn" id="task_save_btn">Save</button>
 					</div>
 				</form>
+				
 			</div>
 		</div>
 		
 	</div>
-	
+
 	<!-- ================== BEGIN jquery ================== -->
 	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 	<!-- ================== END jquery-js ================== -->

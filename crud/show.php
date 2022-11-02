@@ -33,7 +33,7 @@ function getTasks($status)
     }else if ($status == 3){
         $icons = 'fa-circle-check';
     }  
-    while($row = mysqli_fetch_assoc($data)){
+    foreach($data as $row){
     echo '<button 
     class="bg-light d-flex align-items-center border-0 w-100 mb-2 py-3 px-0 bg-white mb-1" 
     href="#modal-task" data-bs-toggle="modal"
