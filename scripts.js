@@ -29,33 +29,5 @@ function showModalTask(id){
     form.task_description.value = document.getElementById(id).getAttribute('description');
 }
 
-
-form.addEventListener('submit',(e)=>{
-    if(form.task_priority.value.toLowerCase() =="please select"){
-        e.preventDefault();
-        console.log("priority is required");
-        form.task_priority.style="border:2px Solid red";
-    }else{
-        form.task_priority.style="border:2px Solid green";
-        console.log("success")
-    }
-
-})
-
-// const validate = new window.JustValidate('#form-task');
-// validate
-//   .addField('#task-title', [
-//     {
-//       rule: 'minLength',
-//       value: 3,
-//     },
-//     {
-//       rule: 'required',
-//     },
-//     {
-//       rule: 'maxLength',
-//       value: 120,
-//     },
-//   ])
-
-  
+//parsley library
+$('#form-task').parsley();

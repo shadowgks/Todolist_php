@@ -17,6 +17,7 @@
 	<link href="assets/css/vendor.min.css" rel="stylesheet" />
 	<link href="assets/css/default/app.min.css" rel="stylesheet" />
 	<!-- ================== END core-css ================== -->
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -333,7 +334,6 @@
 		</div>
 		<!-- END #content -->
 		
-		
 		<!-- BEGIN scroll-top-btn -->
 		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top" data-toggle="scroll-to-top"><i class="fa fa-angle-up"></i></a>
 		<!-- END scroll-top-btn -->
@@ -344,17 +344,18 @@
 	<div class="modal fade" id="modal-task">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<form action="scripts.php" method="POST" id="form-task" name="formTask">
+				<form action="scripts.php" method="POST" id="form-task" name="formTask" data-parsley-validate>
 					<div class="modal-header">
 						<h5 class="modal-title">Add Task</h5>
 						<a href="#" class="btn-close" data-bs-dismiss="modal"></a>
 					</div>
 					<div class="modal-body">
+						
 							<!-- This Input Allows Storing Task Index  -->
 							<input type="hidden" name="task_id" id="task-id">
 							<div class="mb-3">
 								<label class="form-label">Title</label>
-								<input type="text" name="task_title" class="form-control" id="task-title"/>
+								<input type="text" name="task_title" class="form-control" id="task-title" required minlength="3" maxlength="60"/>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Type</label>
@@ -362,52 +363,60 @@
 									<?php
 									$requete = "SELECT * FROM types";
 									$data = mysqli_query($conn,$requete);
-									while ($row = mysqli_fetch_assoc($data)){
-										echo '
-										<div class="form-check mb-1">
-											<input class="form-check-input" name="task_type" type="radio" value="'.$row['id'].'" id="task-type-'.$row['name'].'"/>
-											<label class="form-check-label" for="task-type-'.$row['name'].'">'.$row['name'].'</label>
-										</div>
-										';
+									foreach($data as $row){
+										if($row['id'] == 1){
+											echo '
+											<div class="form-check mb-1">
+												<input class="form-check-input" name="task_type" type="radio" value="'.$row['id'].'" id="task-type-'.$row['name'].'" checked/>
+												<label class="form-check-label" for="task-type-'.$row['name'].'">'.$row['name'].'</label>
+											</div>';
+										}else{
+											echo '
+											<div class="form-check mb-1">
+												<input class="form-check-input" name="task_type" type="radio" value="'.$row['id'].'" id="task-type-'.$row['name'].'"/>
+												<label class="form-check-label" for="task-type-'.$row['name'].'">'.$row['name'].'</label>
+											</div>';
+										}	
 									};
 									?>
 								</div>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Priority</label>
-								<select name="task_priority" class="form-select" id="task-priority">
-									<option value="Please select">Please select</option>
+								<select name="task_priority" class="form-select" id="task-priority" required>
+									<option disabled selected value="Please select">Please select</option>
 									<!-- Select table priorities -->
 									<?php
 									$requete = "SELECT * FROM priorities";
 									$data = mysqli_query($conn,$requete);
-									while ($row = mysqli_fetch_assoc($data)){
+									foreach($data as $row){
 										echo '
 										<option value="'.$row['id'].'">'.$row['name'].'</option>
 										';
-									};
+									}
+										
 									?>
 								</select>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Status</label>
-								<select name="task_status" class="form-select" id="task-status">
-									<option value="Please select">Please select</option>
+								<select name="task_status" class="form-select" id="task-status" required>
+									<option disabled selected value="Please select">Please select</option>
 									<!-- Select table priorities -->
 									<?php
 									$requete = "SELECT * FROM statuses";
 									$data = mysqli_query($conn,$requete);
-									while ($row = mysqli_fetch_assoc($data)){
+									foreach($data as $row){
 										echo '
 										<option value="'.$row['id'].'">'.$row['name'].'</option>
 										';
-									};
+									}
 									?>
 								</select>
 							</div>
 							<div class="mb-3">
 								<label class="form-label">Date</label>
-								<input name="task_datetime" type="datetime-local" class="form-control" id="task-date"/>
+								<input name="task_datetime" type="datetime-local" class="form-control" id="task-date" required/>
 							</div>
 							<div class="mb-0">
 								<label class="form-label">Description</label>
@@ -427,16 +436,19 @@
 		
 	</div>
 	
+	<!-- ================== BEGIN jquery ================== -->
+	<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+	<!-- ================== END jquery-js ================== -->
+	
+	<!-- ================== BEGIN parsley-js ================== -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/parsley.js/2.9.2/parsley.min.js" integrity="sha512-eyHL1atYNycXNXZMDndxrDhNAegH2BDWt1TmkXJPoGf1WLlNYt08CSjkqF5lnCRmdm3IrkHid8s2jOUY4NIZVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>	
+	<!-- ================== BEGIN parsley-js ================== -->
 	
 	<!-- ================== BEGIN core-js ================== -->
 	<script src="assets/js/vendor.min.js"></script>
 	<script src="assets/js/app.min.js"></script>
 	<!-- ================== END core-js ================== -->
-
-	<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 	
 	<script src="scripts.js"></script>
-
-	<script></script>
 </body>
 </html>
